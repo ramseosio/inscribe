@@ -156,6 +156,11 @@
                     <div class="btn reset_red" @click="reset">Reset</div>
                 </div>
             </div>
+            <div class="footer">
+                <p>Current Version：New User</p>
+                <p>TP Version：<a href="https://tp.ramseos.io/">https://tp.ramseos.io/</a></p>
+                <p>Import Version：<a href="https://import.ramseos.io/">https://import.ramseos.io/</a></p>
+            </div>
         </div>
     </div>
 </body>
@@ -639,12 +644,12 @@
             countdown() {
                 // 目标日期时间戳
                 const end = Date.parse(new Date('2023-12-22 21:00:00'))
-                let nowdate = new Date()
-                if (nowdate.getTimezoneOffset() != -480) {
-                    nowdate = nowdate - 480 * 60000 + nowdate.getTimezoneOffset() * 60000
-                }
                 // 当前时间戳
-                const now = Date.parse(nowdate)
+                const nowdate = new Date()
+                let now = Date.parse(nowdate)
+                if (nowdate.getTimezoneOffset() != -480) {
+                    now = now - 480 * 60 + nowdate.getTimezoneOffset() * 60
+                }
                 // 相差的毫秒数
                 const msec = end - now
 

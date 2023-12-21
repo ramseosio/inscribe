@@ -644,7 +644,7 @@
                     nowdate = nowdate - 480 * 60000 + nowdate.getTimezoneOffset() * 60000
                 }
                 // 当前时间戳
-                const now = Date.parse(new Date())
+                const now = Date.parse(nowdate)
                 // 相差的毫秒数
                 const msec = end - now
 

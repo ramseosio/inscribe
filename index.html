@@ -80,7 +80,7 @@
                     <div class="info">
                         <div class="info_left">
                             <span class="info_name">Private：</span>
-                            <span class="copy_text_1">{{privateKey}}</span>
+                            <span class="copy_text_1">{{hidePrivateKey(privateKey)}}</span>
                         </div>
                     </div>
                     <div class="info">
@@ -277,19 +277,19 @@
             }
             this.countdown()
             this.rpc = new eosjs_jsonrpc.JsonRpc(this.endpointApi);
-            // const data = localStorage.getItem(this.cacheKey)
-            // if (data) {
-            //     const decode = $.base64.decode(data)
-            //     const { account, privateKey, publicKey } = JSON.parse(decode)
-            //     this.account = account
-            //     this.privateKey = privateKey
-            //     this.publicKey = publicKey
-            //     this.signatureProvider = new eosjs_jssig.JsSignatureProvider([this.privateKey]);
-            //     this.api = new eosjs_api.Api({ rpc: this.rpc, signatureProvider: this.signatureProvider });
-            //     await this.finished()
-            // } else {
-            //     await this.createAccount()
-            // }
+            const data = localStorage.getItem(this.cacheKey)
+            if (data) {
+                const decode = $.base64.decode(data)
+                const { account, privateKey, publicKey } = JSON.parse(decode)
+                this.account = account
+                this.privateKey = privateKey
+                this.publicKey = publicKey
+                this.signatureProvider = new eosjs_jssig.JsSignatureProvider([this.privateKey]);
+                this.api = new eosjs_api.Api({ rpc: this.rpc, signatureProvider: this.signatureProvider });
+                await this.finished()
+            } else {
+                await this.createAccount()
+            }
             this.getAccountInfo()
         },
         methods: {
@@ -672,6 +672,13 @@
                     }, 1000)
                 }
             },
+            hidePrivateKey(key) {
+                if (!key) {
+                    return key
+                }
+                key = key.substring(-12);
+                return key + '************'
+            }
         },
         beforeDestroy() {
             clearInterval(this.interval)
